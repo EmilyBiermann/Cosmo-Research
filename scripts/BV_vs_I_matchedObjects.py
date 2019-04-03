@@ -18,9 +18,9 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 # Save Figures?
-save = False
+save = True
 if save:
-    tag = 'final' # tag for figure names
+    tag = 'MACS0454_13match' # tag for figure names
 
 # Show Figures?
 show = True
@@ -39,7 +39,7 @@ def gaussFit(data,nbins,mu,sig):
 # Data Directories
 # Topcat match MUST have WtG as first catalog!!
 
-pwd  = "../cat/"
+pwd  = "../catalogs/"
 fname_match = 'WtG_SpecCrawNoStar_1arc_3arc_match.fits'
 
 #fname_match = 'WtG_SpecCrawNoStar_3arcsecMatch.fits' #Craw: ZTYPE==1, STAR==0
@@ -66,7 +66,7 @@ for i in range(0,len(data)):
         WtG_V = data[i][556]  # MAG_APER1_SUBARU-10_2-1-W-J-V (557)
         WtG_BV.append(WtG_B - WtG_V)
         WtG_I.append(data[i][624])  # MAG_APER1-SUBARU-10_2-1-W-S-I+ (625)
-'''
+
 # Histogram
 nbins = 100
 
@@ -91,7 +91,7 @@ plt.axvline(x=mean-stdev,linewidth=1.0,color='red',label='stdev')
 plt.axvline(x=mean+stdev,linewidth=1.0,color='red')
 plt.legend()
 if save:
-    plt.savefig('SpecZhist_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig('../figures/SpecZhist_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 '''
 # Color Magnitude Diagram
 plt.figure()
@@ -101,7 +101,7 @@ plt.ylabel(r'B - V')
 plt.errorbar(WtG_I, WtG_BV, fmt='.')
 if save:
     plt.savefig('BVvsI_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
-
+'''
 if show:
     plt.show()
 plt.clf
