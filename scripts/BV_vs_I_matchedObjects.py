@@ -102,7 +102,7 @@ plt.xlabel(r'I')
 plt.ylabel(r'B - V')
 plt.errorbar(WtG_I, WtG_BV, fmt='.')
 if save:
-    plt.savefig('BVvsI_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig('../figures/BVvsI_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
 if show:
     plt.show()
