@@ -20,7 +20,7 @@ rc('text', usetex=True)
 # Save Figures?
 save = True
 if save:
-    tag = 'MACS0454_13match_clippedOnCluster' # tag for figure names
+    tag = 'MACS0454_13match' # tag for figure names
 
 # Show Figures?
 show = True
@@ -62,13 +62,13 @@ specZ_cut = []
 for i in range(0,len(data)):
     z = data[i][774] # Z (775)
     specZ.append(z)
-    if z>0.48 and z<0.62:
+    if z>=0.524 and z<=0.552:
         WtG_B = data[i][528]  # MAG_APER1_SUBARU-10_2-1-W-J-B (529)
         WtG_V = data[i][556]  # MAG_APER1_SUBARU-10_2-1-W-J-V (557)
         WtG_BV.append(WtG_B - WtG_V)
-        WtG_I.append(data[i][624])  # MAG_APER1-SUBARU-10_2-1-W-S-I+ (625)
+        WtG_I.append(data[i][616])  # MAG_ISO-SUBARU-10_2-1-W-S-I+ (617)
         specZ_cut.append(z)
-
+'''
 # Histogram
 nbins = 50
 
@@ -103,7 +103,7 @@ plt.ylabel(r'B - V')
 plt.errorbar(WtG_I, WtG_BV, fmt='.')
 if save:
     plt.savefig('BVvsI_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
-'''
+
 if show:
     plt.show()
 plt.clf
