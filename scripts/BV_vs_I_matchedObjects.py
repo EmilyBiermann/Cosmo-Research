@@ -20,7 +20,7 @@ rc('text', usetex=True)
 # Save Figures?
 save = True
 if save:
-    tag = 'MACS0454_13match' # tag for figure names
+    tag = 'MACS0454_13match_clippedOnCluster' # tag for figure names
 
 # Show Figures?
 show = True
@@ -56,35 +56,37 @@ data = matchCat[1].data
 WtG_BV = []
 WtG_I = []
 specZ = []
+specZ_cut = []
 
 # Get data
 for i in range(0,len(data)):
     z = data[i][774] # Z (775)
     specZ.append(z)
-    if z>0.47 and z<0.62:
+    if z>0.48 and z<0.62:
         WtG_B = data[i][528]  # MAG_APER1_SUBARU-10_2-1-W-J-B (529)
         WtG_V = data[i][556]  # MAG_APER1_SUBARU-10_2-1-W-J-V (557)
         WtG_BV.append(WtG_B - WtG_V)
         WtG_I.append(data[i][624])  # MAG_APER1-SUBARU-10_2-1-W-S-I+ (625)
+        specZ_cut.append(z)
 
 # Histogram
-nbins = 100
+nbins = 50
 
 # SpecZ Histogram to determine cluster redshift
-mean = np.average(specZ)
-stdev = np.std(specZ)
+mean = np.average(specZ_cut)
+stdev = np.std(specZ_cut)
 print('Unclipped')
 print('mean =', mean)
 print('stdev = ', stdev)
 print(' ')
 xarray,yarray,mode,cmin,cmax =\
-     gaussFit(specZ,nbins,mean,stdev)
+     gaussFit(specZ_cut,nbins,mean,stdev)
 # Plot Figure
 plt.figure()
 plt.title(r'SpecZ')
 plt.xlabel(r'Spectroscopic Redshift')
 plt.ylabel(r'Number of Galaxies')
-plt.hist(specZ,range=[cmin,cmax], bins=nbins);
+plt.hist(specZ_cut,range=[cmin,cmax], bins=nbins);
 plt.plot(xarray,yarray,color="black",linewidth=1.0,label='Gaussian Fit')
 plt.axvline(x=mean,linewidth=1.0,color="yellow",label='mean')
 plt.axvline(x=mean-stdev,linewidth=1.0,color='red',label='stdev')
