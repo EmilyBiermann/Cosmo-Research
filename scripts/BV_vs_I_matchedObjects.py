@@ -39,8 +39,14 @@ def gaussFit(data,nbins,mu,sig):
 # Data Directories
 # Topcat match MUST have WtG as first catalog!!
 
-pwd  = "../catalogs/"
-fname_match = 'WtG_SpecCrawNoStar_1arc_3arc_match.fits'
+pwd  = "/home/ebiermann/catalogs/"
+#fname_match = 'WtG_SpecCrawNoStar_1arc_3arc_match.fits'
+#cat1=True
+#cat2=False
+
+fname_match = 'MACS0454-3_typed/WtGMACS0454-03typed_SpecCrawNoStar_13match.fits'
+cat1=False
+cat2=True
 
 #fname_match = 'WtG_SpecCrawNoStar_3arcsecMatch.fits' #Craw: ZTYPE==1, STAR==0
 #fname_match = 'WtGPhot_CSpec_match.fits' # 1arcsec, stars included
@@ -59,16 +65,28 @@ specZ = []
 specZ_cut = []
 
 # Get data
-for i in range(0,len(data)):
-    z = data[i][774] # Z (775)
-    specZ.append(z)
-    if z>=0.524 and z<=0.552:
-        WtG_B = data[i][528]  # MAG_APER1_SUBARU-10_2-1-W-J-B (529)
-        WtG_V = data[i][556]  # MAG_APER1_SUBARU-10_2-1-W-J-V (557)
-        WtG_BV.append(WtG_B - WtG_V)
-        WtG_I.append(data[i][616])  # MAG_ISO-SUBARU-10_2-1-W-S-I+ (617)
-        specZ_cut.append(z)
-'''
+if cat1:
+    for i in range(0,len(data)):
+        z = data[i][774] # Z (775)
+        specZ.append(z)
+        if z>=0.524 and z<=0.552:
+            WtG_B = data[i][528]  # MAG_APER1_SUBARU-10_2-1-W-J-B (529)
+            WtG_V = data[i][556]  # MAG_APER1_SUBARU-10_2-1-W-J-V (557)
+            WtG_BV.append(WtG_B - WtG_V)
+            WtG_I.append(data[i][616])  # MAG_ISO-SUBARU-10_2-1-W-S-I+ (617)
+            specZ_cut.append(z)
+if cat2:
+    for i in range(0,len(data)):
+        z = data[i][829] # Z (830)
+        specZ.append(z)
+        #if z>=0.524 and z<=0.552:
+        if cat2:
+            WtG_B = data[i][603]  # MAG_APER1_SUBARU-conv-1-W-J-B (604)
+            WtG_V = data[i][623]  # MAG_APER1_SUBARU-conv-1-W-J-V (624)
+            WtG_BV.append(WtG_B - WtG_V)
+            WtG_I.append(data[i][675])  # MAG_ISO-SUBARU-conv-W-S-I+ (676)
+            specZ_cut.append(z)
+
 # Histogram
 nbins = 50
 
@@ -103,7 +121,7 @@ plt.ylabel(r'B - V')
 plt.errorbar(WtG_I, WtG_BV, fmt='.')
 if save:
     plt.savefig('../figures/BVvsI_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
-
+'''
 if show:
     plt.show()
 plt.clf
