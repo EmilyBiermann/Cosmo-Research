@@ -1,0 +1,24 @@
+Plots from catalog 'WtG_SpecCrawNoStar_1arc_3arc_match.fits'
+z>0.7
+
+STATISTICS
+
+Unclipped
+mean = -0.056
+stdev = 0.21
+ 
+3sigma clipped, iter1: 13
+mean = -0.039
+stdev = 0.15
+fraction clipped = 0.034
+ 
+3sigma clipped, iter2: 10
+mean = -0.036
+stdev = 0.12
+fraction clipped = 0.06
+ 
+3sigma clipped, iter3: 11
+mean = -0.039
+stdev = 0.094
+fraction clipped = 0.09
+

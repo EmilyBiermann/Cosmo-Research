@@ -1,0 +1,24 @@
+
+
+STATISTICS
+
+Number of data points = 1577
+
+Unclipped
+mean = 0.0625721052632
+stdev = 0.273945908535
+
+3sigma clipped, iter1: 28
+mean = 0.0511748353777
+stdev = 0.219113427774
+fraction clipped = 0.0177552314521
+
+3sigma clipped, iter2: 77
+mean = 0.018318423913
+stdev = 0.148779300711
+fraction clipped = 0.0665821179455
+
+3sigma clipped, iter3: 49
+mean = 0.00526522839072
+stdev = 0.106307382637
+fraction clipped = 0.0976537729867

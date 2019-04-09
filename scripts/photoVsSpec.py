@@ -18,9 +18,10 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 # Save Figures?
-save = False
+save = True
 if save:
-    tag = 'final' # tag for figure name
+    figpwd = '/home/ebiermann/Cosmo-Research/figures/WtG_SpecCrawNoStar_1arc_3arc_match/all_data/'
+    tag = 'allData' # tag for figure name
 
 # Show Figures?
 show = True
@@ -52,7 +53,7 @@ def gaussFit(data,nbins,mu,sig):
 
 # Data Directories
 
-pwd  = "../cat/"
+pwd  = "/home/ebiermann/cat/"
 fname_match = 'WtG_SpecCrawNoStar_1arc_3arc_match.fits'
 
 #fname_match = 'WtG_SpecCrawNoStar_3arcsecMatch.fits' #Craw: ZTYPE==1, STAR==0
@@ -62,6 +63,11 @@ fname_match = 'WtG_SpecCrawNoStar_1arc_3arc_match.fits'
 #fname_match = 'WtG_SpecCrawNoStarNonzeroZ_1arcsecMatch.fits'
 #fname_match = 'WtG_SpecCraw_magStarZcuts_1arcsecMatch.fits'
 #fname_match = 'WtG_SpecCraw_magStarZcuts_3arcsecMatch.fits'
+
+print 'Catalog: ' + fname_match
+print 'Located in ' + pwd
+print
+print 'Notes: '
 
 
 matchCat = fits.open(pwd + fname_match)
@@ -80,19 +86,27 @@ photoZ_errBelow = []
 photoZ_chi2 = []
 
 for i in range(0,len(data)):
-    specZ.append(data[i][774])
-    specZ_err.append(data[i][775])
-    
-    WtG_SeqNr = data[i][2]             # Get data number
-    pZ = bpzData[WtG_SeqNr-1][1]       # photoZ (BPZ_Z_B)
-    photoZ.append(pZ)                  # Add photoZ to array
-    pZmin = bpzData[WtG_SeqNr-1][2]    # Get min photoZ value
-    photoZ_errBelow.append(pZ - pZmin) # Calculate lower errbar
-    pZmax = bpzData[WtG_SeqNr-1][3]    # Get max photoZ value
-    photoZ_errAbove.append(pZmax - pZ) # Calculate upper errbar
-    photoZ_chi2.append(bpzData[WtG_SeqNr-1][8])
+    z = data[i][774]
+    alldata=True
+    if alldata:
+        specZ.append(z)
+        specZ_err.append(data[i][775])     # Z_err (776)
+        
+        WtG_SeqNr = data[i][2]             # Get data number
+        pZ = bpzData[WtG_SeqNr-1][1]       # photoZ (BPZ_Z_B)
+        photoZ.append(pZ)                  # Add photoZ to array
+        pZmin = bpzData[WtG_SeqNr-1][2]    # Get min photoZ value
+        photoZ_errBelow.append(pZ - pZmin) # Calculate lower errbar
+        pZmax = bpzData[WtG_SeqNr-1][3]    # Get max photoZ value
+        photoZ_errAbove.append(pZmax - pZ) # Calculate upper errbar
+        photoZ_chi2.append(bpzData[WtG_SeqNr-1][8])
 
 photoZ_err = np.array([photoZ_errBelow,photoZ_errAbove])
+
+print 'STATISTICS'
+print 
+print 'Number of data points = {}'.format(len(specZ))
+print
 
 # 1-1 line
 x=np.linspace(0,np.amax(specZ))
@@ -103,10 +117,10 @@ plt.title(r'Redshift Comparison')
 plt.xlabel(r'SpecZ from Crawford')
 plt.ylabel(r'PhotoZ from WtG')
 #plt.errorbar(specZ, photoZ, xerr=specZ_err, yerr=photoZ_err, fmt='x')
-plt.errorbar(specZ, photoZ, xerr=specZ_err, fmt='.')
+plt.errorbar(specZ, photoZ, xerr=specZ_err,fmt='.')
 plt.plot(x,y,linestyle='--')
 if save:
-    plt.savefig('SpecPhoto_line_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig(figpwd+'SpecPhoto_line_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
 # Histogram
 nbins = 100
@@ -121,10 +135,10 @@ mean = np.average(points)
 stdev = np.std(points)
 xarray,yarray,mode,cmin,cmax =\
      gaussFit(points,nbins,mean,stdev)
-print('Unclipped')
-print('mean =', mean)
-print('stdev = ', stdev)
-print(' ')
+print 'Unclipped'
+print 'mean = {}'.format(mean)
+print 'stdev = {}'.format(stdev)
+print 
 # Plot Figure
 plt.figure()
 plt.title(r'Unclipped Data')
@@ -138,15 +152,16 @@ text_stats = r'''\noindent $\mu = {:.3f}$ \\'''.format(mean) + \
              r'''$\sigma = {:.3f}$ \\'''.format(stdev)
 #plt.text(1.3,325,text_stats,{'fontsize':20})
 if save:
-    plt.savefig('SpecPhoto_noclip_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig(figpwd+'SpecPhoto_noclip_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
 ### Sigma Clipping 1 ###
 points_clip1,pointsCut1,mean_clip1,stdev_clip1 = sigma3clip(points,mean,stdev)
 totclip = pointsCut1
-print('3sigma clipped, iter1:',pointsCut1)
-print('mean =', mean_clip1)
-print('stdev = ', stdev_clip1)
-print(' ')
+print '3sigma clipped, iter1: {}'.format(pointsCut1)
+print 'mean = {}'.format(mean_clip1)
+print 'stdev = {}'.format(stdev_clip1)
+print 'fraction clipped = {}'.format(float(totclip)/float(len(specZ)))
+print 
 # Fit Gaussian
 xarray,yarray,mode,cmin,cmax =\
      gaussFit(points_clip1,nbins,mean_clip1,stdev_clip1)
@@ -165,16 +180,17 @@ text_clip = r'''Total Clippied = {}'''.format(totclip)
 #plt.text(0.4,175,text_stats,{'fontsize':20})
 #plt.text(-0.6,225,text_clip)
 if save:
-    plt.savefig('SpecPhoto_clip1_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig(figpwd+'SpecPhoto_clip1_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
 ### Sigma Clipping 2 ###
 points_clip2,pointsCut2,mean_clip2,stdev_clip2 = \
     sigma3clip(points_clip1,mean_clip1,stdev_clip1)
 totclip = totclip + pointsCut2
-print('3sigma clipped, iter2:',pointsCut2)
-print('mean =', mean_clip2)
-print('stdev = ', stdev_clip2)
-print(' ')
+print '3sigma clipped, iter2: {}'.format(pointsCut2)
+print 'mean = {}'.format(mean_clip2)
+print 'stdev = {}'.format(stdev_clip2)
+print 'fraction clipped = {}'.format(float(totclip)/float(len(specZ)))
+print 
 # Fit Gaussian
 nbins = 100
 xarray,yarray,mode,cmin,cmax =\
@@ -194,15 +210,16 @@ text_clip = r'''Total Clippied = {}'''.format(totclip)
 #plt.text(0.4,150,text_stats,{'fontsize':20})
 #plt.text(-0.6,190,text_clip)
 if save:
-    plt.savefig('SpecPhoto_clip2_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig(figpwd+'SpecPhoto_clip2_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
 ### Sigma Clipping 3 ###
 points_clip3,pointsCut3,mean_clip3,stdev_clip3 = \
     sigma3clip(points_clip2,mean_clip2,stdev_clip2)
 totclip = totclip + pointsCut3
-print('3sigma clipped, iter3:',pointsCut3)
-print('mean =', mean_clip3)
-print('stdev = ', stdev_clip3)
+print '3sigma clipped, iter3: {}'.format(pointsCut3)
+print 'mean = {}'.format(mean_clip3)
+print 'stdev = {}'.format(stdev_clip3)
+print 'fraction clipped = {}'.format(float(totclip)/float(len(specZ)))
 # Fit Gaussian
 xarray,yarray,mode,cmin,cmax =\
     gaussFit(points_clip3,nbins,mean_clip3,stdev_clip3)
@@ -221,10 +238,11 @@ text_clip = r'''Total Clippied = {}'''.format(totclip)
 #plt.text(0.2,100,text_stats,{'fontsize':20})
 #plt.text(-0.4,120,text_clip)
 if save:
-    plt.savefig('SpecPhoto_clip3_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig(figpwd+'SpecPhoto_clip3_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
 if show:
     plt.show()
+
 plt.clf
 
 

@@ -1,0 +1,27 @@
+plots from catalog 'WtG_SpecCrawNoStar_1arc_3arc_match.fits'
+Located in  '/home/ebiermann/cat/'
+
+extra cuts: z>0.01
+
+STATISTICS
+
+Number of data points = 1423
+
+Unclipped
+mean = -0.0044
+stdev = 0.15
+
+3sigma clipped, iter1: 36
+mean = -0.0033
+stdev = 0.099
+fraction clipped = 0.025
+
+3sigma clipped, iter2: 48
+mean = -0.0041
+stdev = 0.071
+fraction clipped = 0.06
+
+3sigma clipped, iter3: 38
+mean = -0.0035
+stdev = 0.058
+fraction clipped = 0.086

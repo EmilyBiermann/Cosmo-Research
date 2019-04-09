@@ -1,0 +1,27 @@
+Plots from catalog 'WtG_SpecCrawNoStar_1arc_3arc_match.fits'
+0.01<z<=0.7
+
+STATISTICS
+
+total data points: 1041
+
+Unclipped
+('mean =', 0.014548511047070129)
+('stdev = ', 0.12009651053003577)
+ 
+('3sigma clipped, iter1:', 31)
+('mean =', 0.006446732673267331)
+('stdev = ', 0.07273725480965973)
+('fraction clipped =', 0.029779058597502402)
+ 
+('3sigma clipped, iter2:', 30)
+('mean =', 0.006633397959183679)
+('stdev = ', 0.054348671032930604)
+('fraction clipped =', 0.05859750240153699)
+ 
+('3sigma clipped, iter3:', 26)
+('mean =', 0.006556006289308181)
+('stdev = ', 0.045918981065574495)
+('fraction clipped =', 0.08357348703170028)
+
+
