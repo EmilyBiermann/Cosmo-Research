@@ -1,0 +1,43 @@
+"""
+Emily Biermann
+QQ Plot
+4/23/19
+"""
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+from astropy.io import fits
+from scipy import stats
+from scipy.stats import norm
+
+from matplotlib import rc
+rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
+## for Palatino and other serif fonts use:
+#rc('font',**{'family':'serif','serif':['Palatino']})
+rc('text', usetex=True)
+
+# Path to catalogs
+pwd = "/home/ebiermann/cat/"
+fname_match = 'match13_pdz.fits'
+
+# Open catalog
+cat = fits.open(pwd + fname_match)
+data = cat[1].data
+cat.close()
+
+# Allocate arrays
+quant = []
+
+for i in range(0,len(data)):
+    specZ = data[i][774] # Z, 775
+    pdz = data[i][813]   # pdz, 814
+    numLine = np.linspace(0.,4.01,0.01)
+    q = stats.percentileofscore(pdz,specZ)/100.0 # Ask Ricardo
+    quant.append(q)
+
+plt.figure()
+plt.xlabel(n(Q))
+plt.ylabel(Q)
+plt.hist(quant)
+    
+

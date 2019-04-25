@@ -243,7 +243,7 @@ if save:
 if show:
     plt.show()
 
-plt.clf
+plt.clf()
 
 
 
