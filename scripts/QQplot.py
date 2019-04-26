@@ -20,13 +20,14 @@ rc('text', usetex=True)
 
 # Path to catalogs
 pwd = "/home/ebiermann/cat/"
-fname_match = 'match13_pdz.fits'
+#fname_match = 'match13_pdz.fits'
+fname_match = 'match13_pdz_goodZ.fits'
 
 # Save Figures?
-save = False
+save = True
 if save:
     figpwd = '/home/ebiermann/Cosmo-Research/figures/QQ/'
-    tag = 'MACS0454_all' # tag for figure name
+    tag = 'MACS0454_goodZ' # tag for figure name
 
 # Show Figures?
 show = True
@@ -46,7 +47,7 @@ def QuanVal(x,p,a,step):
             break
         else:
             continue
-    return(quant)
+    return(quant/step)
 
 # Open catalog
 cat = fits.open(pwd + fname_match)
@@ -67,13 +68,14 @@ for i in range(0,len(data)):
     z = np.arange(0.01,4.01,step)
     q = QuanVal(z,pdz,specZ,step)
     quant.append(q)
-    # plot P(z) for every (plot_step) objects
+    # plot P(z) for random objects
     if np.isin(i,plotNums):
         SeqNr = data[i][2] # SeqNr_1, 3
+        Rmag = data[i][650] # MAG_AUTO-SUBARU-COADD-1-W-C-RC, 651
         plt.figure()
-        plt.title('P(z) for {}'.format(SeqNr))
-        plt.xlabel('P(z)')
-        plt.ylabel('z')
+        plt.title('P(z) for {}, Rmag = {:.2f}'.format(SeqNr,Rmag))
+        plt.xlabel('z')
+        plt.ylabel('P(z)')
         plt.plot(z,pdz,label=r'P(z) Distribution')
         plt.axvline(x=specZ,color='orange',label=r'Spectroscopic Redshift')
         plt.legend()
