@@ -19,15 +19,14 @@ rc('text', usetex=True)
 #-------------------------------------------------------------------------------
 
 # Path to catalogs
-pwd = "/home/ebiermann/cat/"
-#fname_match = 'match13_pdz.fits'
-fname_match = 'match13_pdz_goodZ.fits'
+pwd = "/home/ebiermann/cat/matchCat/"
+fname_match = 'WtG_SpecCrawNonzeroZ_13as.fits'
 
 # Save Figures?
 save = True
 if save:
-    figpwd = '/home/ebiermann/Cosmo-Research/figures/QQ/'
-    tag = 'MACS0454_goodZ' # tag for figure name
+    figpwd = '/home/ebiermann/Cosmo-Research/figures/matchCat/all/QQ/'
+    tag = 'MACS0454_allData' # tag for figure name
 
 # Show Figures?
 show = True
@@ -63,8 +62,8 @@ step = 0.01
 nplots = 10
 plotNums=np.random.randint(0,len(data),size=nplots)
 for i in range(0,len(data)):
-    specZ = data[i][774] # Z, 775
-    pdz = data[i][813]   # pdz, 814
+    specZ = data[i][776] # Z, 777
+    pdz = data[i][662]   # pdz, 663
     z = np.arange(0.01,4.01,step)
     q = QuanVal(z,pdz,specZ,step)
     quant.append(q)

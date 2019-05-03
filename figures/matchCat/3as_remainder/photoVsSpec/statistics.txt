@@ -1,0 +1,26 @@
+Catalog: WtG_SpecCrawNonzeroZ_3as_remainder.fits
+Located in /home/ebiermann/cat/matchCat/
+
+Notes: 
+STATISTICS
+
+Number of data points = 287
+
+Unclipped
+mean = 0.0151714634146
+stdev = 0.180816873881
+
+3sigma clipped, iter1: 9
+mean = 0.00589877697842
+stdev = 0.124069759276
+fraction clipped = 0.0313588850174
+
+3sigma clipped, iter2: 10
+mean = 0.00226828358209
+stdev = 0.0961583417732
+fraction clipped = 0.0662020905923
+
+3sigma clipped, iter3: 7
+mean = 0.00615333333333
+stdev = 0.0801018720442
+fraction clipped = 0.0905923344948

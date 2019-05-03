@@ -18,9 +18,9 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 # Save Figures?
-save = True
+save = False
 if save:
-    figpwd = '/home/ebiermann/Cosmo-Research/figures/WtG_SpecCrawNoStar_1arc_3arc_match/all_data/'
+    figpwd = '/home/ebiermann/Cosmo-Research/figures/matchCat/all/'
     tag = 'allData' # tag for figure name
 
 # Show Figures?
@@ -53,16 +53,9 @@ def gaussFit(data,nbins,mu,sig):
 
 # Data Directories
 
-pwd  = "/home/ebiermann/cat/"
-fname_match = 'WtG_SpecCrawNoStar_1arc_3arc_match.fits'
-
-#fname_match = 'WtG_SpecCrawNoStar_3arcsecMatch.fits' #Craw: ZTYPE==1, STAR==0
-#fname_match = 'WtGPhot_CSpec_match.fits' # 1arcsec, stars included
-#fname_match = 'WtG_SpecCraw_Zcut_3arcsecMatch.fits' # Craw: 0.5<=z<=0.9
-#fname_match = 'WtG_SpecCrawNoStarNonzeroZ_3arcsecMatch.fits'
-#fname_match = 'WtG_SpecCrawNoStarNonzeroZ_1arcsecMatch.fits'
-#fname_match = 'WtG_SpecCraw_magStarZcuts_1arcsecMatch.fits'
-#fname_match = 'WtG_SpecCraw_magStarZcuts_3arcsecMatch.fits'
+pwd  = "/home/ebiermann/cat/matchCat/"
+fname_match = 'WtG_SpecCrawNonzeroZ_13as.fits'
+#fname_match = 'WtG_SpecCrawNonzeroZ_3as_remainder.fits'
 
 print 'Catalog: ' + fname_match
 print 'Located in ' + pwd
@@ -86,11 +79,10 @@ photoZ_errBelow = []
 photoZ_chi2 = []
 
 for i in range(0,len(data)):
-    z = data[i][774]
+    z = data[i][776] # Z, 777
     alldata=True
     if alldata:
         specZ.append(z)
-        specZ_err.append(data[i][775])     # Z_err (776)
         
         WtG_SeqNr = data[i][2]             # Get data number
         pZ = bpzData[WtG_SeqNr-1][1]       # photoZ (BPZ_Z_B)
@@ -117,7 +109,7 @@ plt.title(r'Redshift Comparison')
 plt.xlabel(r'SpecZ from Crawford')
 plt.ylabel(r'PhotoZ from WtG')
 #plt.errorbar(specZ, photoZ, xerr=specZ_err, yerr=photoZ_err, fmt='x')
-plt.errorbar(specZ, photoZ, xerr=specZ_err,fmt='.')
+plt.errorbar(specZ, photoZ,fmt='.')
 plt.plot(x,y,linestyle='--')
 if save:
     plt.savefig(figpwd+'SpecPhoto_line_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')

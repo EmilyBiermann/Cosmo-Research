@@ -11,7 +11,7 @@ from astropy.io import fits
 #from scipy import stats
 #from scipy.stats import norm
 
-pwd = "../cat/"
+pwd = "../cat/matchCat/"
 photoCat = fits.open(pwd + "MACS0454-03.W-C-RC.cat")
 specCat = fits.open(pwd + "w05.master.fits")
 pData = photoCat[1].data

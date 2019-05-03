@@ -20,7 +20,8 @@ rc('text', usetex=True)
 # Save Figures?
 save = False
 if save:
-    tag = 'final' # tag for figure names
+    pwdfig = '/home/ebiermann/Cosmo-Research/figures/matchCat/3as_remainder/magCompare/'
+    tag = '3as_rem' # tag for figure names
 
 # Show Figures?
 show = True
@@ -53,16 +54,9 @@ def gaussFit(data,nbins,mu,sig):
 # Data Directories
 # Topcat match MUST have WtG as first catalog!!
 
-pwd  = "../cat/"
-fname_match = 'WtG_SpecCrawNoStar_1arc_3arc_match.fits'
-
-#fname_match = 'WtG_SpecCrawNoStar_3arcsecMatch.fits' #Craw: ZTYPE==1, STAR==0
-#fname_match = 'WtGPhot_CSpec_match.fits' # 1arcsec, stars included
-#fname_match = 'WtG_SpecCrawNoStarNonzeroZ_3arcsecMatch.fits'
-#fname_match = 'WtG_SpecCrawNoStarNonzeroZ_1arcsecMatch.fits'
-#fname_match = 'WtG_SpecCraw_magStarZcuts_1arcsecMatch.fits'
-#fname_match = 'WtG_SpecCraw_magStarZcuts_3arcsecMatch.fits'
-
+pwd  = "/home/ebiermann/cat/matchCat/"
+#fname_match = 'WtG_SpecCrawNonzeroZ_13as.fits'
+fname_match = 'WtG_SpecCrawNonzeroZ_3as_remainder.fits'
 
 matchCat = fits.open(pwd + fname_match)
 data = matchCat[1].data
@@ -72,7 +66,7 @@ CRAW_mag = []
 
 for i in range(0,len(data)):
     WtG_mag.append(data[i][650])  # MAG_AUTO-SUBARU-COADD-1-W-C-RC
-    CRAW_mag.append(data[i][672]) # MAG
+    CRAW_mag.append(data[i][674]) # MAG, 675
 
 
 # 1-1 line
@@ -86,7 +80,7 @@ plt.ylabel(r'Mag from WtG')
 plt.errorbar(CRAW_mag, WtG_mag, fmt='.')
 plt.plot(x,y,linestyle='--')
 if save:
-    plt.savefig('MagMatch_line_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig(pwdfig+'MagMatch_line_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
 # Histogram
 nbins = 100
@@ -118,7 +112,7 @@ text_stats = r'''\noindent $\mu = {:.3f}$ \\'''.format(mean) + \
              r'''$\sigma = {:.3f}$ \\'''.format(stdev)
 #plt.text(39,900,text_stats,{'fontsize':20})
 if save:
-    plt.savefig('MagMatch_noclip_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig(pwdfig+'MagMatch_noclip_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
 ### Sigma Clipping 1 ###
 points_clip1,pointsCut1,mean_clip1,stdev_clip1 = sigma3clip(points,mean,stdev)
@@ -145,7 +139,7 @@ text_clip = r'''Total Clippied = {}'''.format(totclip)
 #plt.text(1.7,375,text_stats,{'fontsize':20})
 #plt.text(-12.5,490,text_clip)
 if save:
-    plt.savefig('MagMatch_clip1_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig(pwdfig+'MagMatch_clip1_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
 ### Sigma Clipping 2 ###
 points_clip2,pointsCut2,mean_clip2,stdev_clip2 = \
@@ -174,7 +168,7 @@ text_clip = r'''Total Clippied = {}'''.format(totclip)
 #plt.text(2.6,400,text_stats,{'fontsize':20})
 #plt.text(-7,490,text_clip)
 if save:
-    plt.savefig('MagMatch_clip2_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig(pwdfig+'MagMatch_clip2_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
 ### Sigma Clipping 3 ###
 points_clip3,pointsCut3,mean_clip3,stdev_clip3 = \
@@ -201,7 +195,7 @@ text_clip = r'''Total Clippied = {}'''.format(totclip)
 #plt.text(1.3,250,text_stats,{'fontsize':20})
 #plt.text(-3,345,text_clip)
 if save:
-    plt.savefig('MagMatch_clip3_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig(pwdfig+'MagMatch_clip3_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
 if show:
     plt.show()

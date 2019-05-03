@@ -1,0 +1,26 @@
+Catalog: WtG_SpecCrawNonzeroZ_13as.fits
+Located in /home/ebiermann/cat/matchCat/
+
+Notes: 
+STATISTICS
+
+Number of data points = 1444
+
+Unclipped
+mean = -0.00227767313019
+stdev = 0.164058257113
+
+3sigma clipped, iter1: 34
+mean = -0.00239677304965
+stdev = 0.101809088956
+fraction clipped = 0.0235457063712
+
+3sigma clipped, iter2: 50
+mean = -0.00423316911765
+stdev = 0.0722450523191
+fraction clipped = 0.0581717451524
+
+3sigma clipped, iter3: 38
+mean = -0.00320787443268
+stdev = 0.0585664140606
+fraction clipped = 0.084487534626
