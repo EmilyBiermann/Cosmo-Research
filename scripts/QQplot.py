@@ -21,6 +21,7 @@ rc('text', usetex=True)
 # Path to catalogs
 pwd = "/home/ebiermann/cat/matchCat/"
 fname_match = 'WtG_SpecCrawNonzeroZ_13as.fits'
+#fname_match = 'WtG_SpecCrawNonzeroZ_3as_remainder.fits'
 
 # Save Figures?
 save = True
