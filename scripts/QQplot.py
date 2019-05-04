@@ -6,6 +6,7 @@ QQ Plot
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 from astropy.io import fits
 from scipy import stats
 from scipy.stats import norm
@@ -18,8 +19,8 @@ rc('text', usetex=True)
 
 #-------------------------------------------------------------------------------
 
-cat1 = False
-cat2 = True
+cat1 = True
+cat2 = False
 
 # Data Directories
 # Topcat match MUST have WtG as first catalog!!
@@ -81,6 +82,7 @@ for i in range(0,len(data)):
     q = QuanVal(z,pdz,specZ,step)
     quant.append(q)
     # plot P(z) for random objects
+    
     if np.isin(i,plotNums):
         SeqNr = data[i][2] # SeqNr_1, 3
         Rmag = data[i][650] # MAG_AUTO-SUBARU-COADD-1-W-C-RC, 651
@@ -96,19 +98,36 @@ for i in range(0,len(data)):
             format='png',dpi=1000,bbox_inches='tight')
     else:
         continue
+    
 
 
-# QQ plot
-nbins = 50
+# PIT/QQ residuals Plot
+nbins = 75
+Qdata = np.sort(quant)
+Qtheory = np.linspace(0.0,1.0,len(quant))
+delQ = Qdata - Qtheory
 
 plt.figure()
-plt.title(r'MACS0454')
-plt.ylabel('n(Q)')
-plt.xlabel('Q')
+gridspec.GridSpec(3,2)
+
+plt.subplot2grid((3,2), (0,0), colspan=2, rowspan=2)
+plt.title('MACS0454')
+#plt.xlabel('PIT Value')
+plt.ylabel('Number of Galaxies')
 plt.hist(quant,bins=nbins)
-    
+
+plt.subplot2grid((3,2), (2,0), colspan=2, rowspan=1)
+plt.xlabel(r'Quantile')
+plt.ylabel(r'$\Delta_{\textrm{Q}}$')
+plt.hlines(0.0,0.0,1.0,linestyles='--')
+plt.plot(Qtheory,delQ)
+
+plt.tight_layout()
 if save:
-    plt.savefig(figpwd+'QQplot_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig(figpwd+'QQplot_{}.png'.format(tag),\
+    format='png',dpi=1000,bbox_inches='tight')
+
+
 if show:
     plt.show()
 plt.clf()
