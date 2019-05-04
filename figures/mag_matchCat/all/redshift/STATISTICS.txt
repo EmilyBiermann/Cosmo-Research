@@ -1,0 +1,22 @@
+STATISTICS
+
+Number of data points = 1396
+
+Unclipped
+mean = -0.00645715616046
+stdev = 0.153173010819
+
+3sigma clipped, iter1: 29
+mean = -0.0047988076079
+stdev = 0.094687584117
+fraction clipped = 0.0207736389685
+
+3sigma clipped, iter2: 46
+mean = -0.00491180923543
+stdev = 0.067606986837
+fraction clipped = 0.0537249283668
+
+3sigma clipped, iter3: 30
+mean = -0.00435872966692
+stdev = 0.0568530569578
+fraction clipped = 0.0752148997135

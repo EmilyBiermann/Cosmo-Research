@@ -18,19 +18,31 @@ rc('text', usetex=True)
 
 #-------------------------------------------------------------------------------
 
-# Path to catalogs
-pwd = "/home/ebiermann/cat/matchCat/"
-fname_match = 'WtG_SpecCrawNonzeroZ_13as.fits'
-#fname_match = 'WtG_SpecCrawNonzeroZ_3as_remainder.fits'
+cat1 = False
+cat2 = True
+
+# Data Directories
+# Topcat match MUST have WtG as first catalog!!
+
+pwd  = "/home/ebiermann/cat/mag_matchCat/"
+if cat1:
+    fname_match = 'match4_1as_3as1mag.fits'
+if cat2:
+    fname_match = 'match3_3as1mag_rem.fits'
 
 # Save Figures?
 save = True
 if save:
-    figpwd = '/home/ebiermann/Cosmo-Research/figures/matchCat/all/QQ/'
-    tag = 'MACS0454_allData' # tag for figure name
+    if cat1:
+        figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/QQ/'
+        tag = 'all' # tag for figure names
+    if cat2:
+        figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/match3_rem/QQ/'
+        tag = 'match3rem'
 
 # Show Figures?
 show = True
+
 
 #-------------------------------------------------------------------------------
 

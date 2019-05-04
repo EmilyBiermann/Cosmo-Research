@@ -17,14 +17,34 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 #rc('font',**{'family':'serif','serif':['Palatino']})
 rc('text', usetex=True)
 
+#-------------------------------------------------------------------------------
+
+cat1 = True
+cat2 = False
+
+# Data Directories
+# Topcat match MUST have WtG as first catalog!!
+
+pwd  = "/home/ebiermann/cat/mag_matchCat/"
+if cat1:
+    fname_match = 'match4_1as_3as1mag.fits'
+if cat2:
+    fname_match = 'match3_3as1mag_rem.fits'
+
 # Save Figures?
-save = False
+save = True
 if save:
-    figpwd = '/home/ebiermann/Cosmo-Research/figures/matchCat/all/'
-    tag = 'allData' # tag for figure name
+    if cat1:
+        figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/redshift/'
+        tag = 'all' # tag for figure names
+    if cat2:
+        figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/match3_rem/redshift/'
+        tag = 'match3rem'
 
 # Show Figures?
 show = True
+
+#-------------------------------------------------------------------------------
 
 # Defintions
 
@@ -50,12 +70,6 @@ def gaussFit(data,nbins,mu,sig):
     xarray=np.linspace(cmin,cmax,nbins*10)
     yarray=normalization*norm.pdf(xarray,loc=mu, scale=sig)
     return(xarray,yarray,mode,cmin,cmax)
-
-# Data Directories
-
-pwd  = "/home/ebiermann/cat/matchCat/"
-fname_match = 'WtG_SpecCrawNonzeroZ_13as.fits'
-#fname_match = 'WtG_SpecCrawNonzeroZ_3as_remainder.fits'
 
 print 'Catalog: ' + fname_match
 print 'Located in ' + pwd
