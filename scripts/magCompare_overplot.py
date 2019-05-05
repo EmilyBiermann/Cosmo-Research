@@ -81,8 +81,8 @@ for i in range(0,len(data)):
     CRAW_mag.append(data[i][674]) # MAG, 675
 
 for i in range(0,len(data2)):
-    WtG_mag2.append(data[i][650])  # MAG_AUTO-SUBARU-COADD-1-W-C-RC
-    CRAW_mag2.append(data[i][674]) # MAG, 675
+    WtG_mag2.append(data2[i][650])  # MAG_AUTO-SUBARU-COADD-1-W-C-RC
+    CRAW_mag2.append(data2[i][674]) # MAG, 675
 
 # 1-1 line
 x=np.linspace(0,np.amax(CRAW_mag))
