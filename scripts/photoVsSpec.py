@@ -19,8 +19,8 @@ rc('text', usetex=True)
 
 #-------------------------------------------------------------------------------
 
-cat1 = True
-cat2 = False
+cat1 = False
+cat2 = True
 
 # Data Directories
 # Topcat match MUST have WtG as first catalog!!

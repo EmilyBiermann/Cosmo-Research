@@ -19,8 +19,8 @@ rc('text', usetex=True)
 
 #-------------------------------------------------------------------------------
 
-cat1 = False
-cat2 = True
+cat1 = True
+cat2 = False
 
 # Data Directories
 # Topcat match MUST have WtG as first catalog!!
@@ -32,7 +32,7 @@ if cat2:
     fname_match = 'match3_3as1mag_rem.fits'
 
 # Save Figures?
-save = False
+save = True
 if save:
     if cat1:
         pwdfig = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/mag/'

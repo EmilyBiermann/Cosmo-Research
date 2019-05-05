@@ -19,8 +19,8 @@ rc('text', usetex=True)
 
 #-------------------------------------------------------------------------------
 
-cat1 = True
-cat2 = False
+cat1 = False
+cat2 = True
 
 # Data Directories
 # Topcat match MUST have WtG as first catalog!!
@@ -82,7 +82,7 @@ for i in range(0,len(data)):
     q = QuanVal(z,pdz,specZ,step)
     quant.append(q)
     # plot P(z) for random objects
-    
+    '''
     if np.isin(i,plotNums):
         SeqNr = data[i][2] # SeqNr_1, 3
         Rmag = data[i][650] # MAG_AUTO-SUBARU-COADD-1-W-C-RC, 651
@@ -98,6 +98,7 @@ for i in range(0,len(data)):
             format='png',dpi=1000,bbox_inches='tight')
     else:
         continue
+    '''
     
 
 
