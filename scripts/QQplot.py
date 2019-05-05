@@ -19,8 +19,8 @@ rc('text', usetex=True)
 
 #-------------------------------------------------------------------------------
 
-cat1 = False
-cat2 = True
+cat1 = True
+cat2 = False
 
 # Data Directories
 # Topcat match MUST have WtG as first catalog!!
@@ -32,7 +32,7 @@ if cat2:
     fname_match = 'match3_3as1mag_rem.fits'
 
 # Save Figures?
-save = True
+save = False
 if save:
     if cat1:
         figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/QQ/'
@@ -82,12 +82,13 @@ for i in range(0,len(data)):
     q = QuanVal(z,pdz,specZ,step)
     quant.append(q)
     # plot P(z) for random objects
-    '''
+    
     if np.isin(i,plotNums):
         SeqNr = data[i][2] # SeqNr_1, 3
         Rmag = data[i][650] # MAG_AUTO-SUBARU-COADD-1-W-C-RC, 651
         plt.figure()
-        plt.title('P(z) for {}, Rmag = {:.2f}'.format(SeqNr,Rmag))
+        #plt.title('P(z) for {}, Rmag = {:.2f}'.format(SeqNr,Rmag))
+        plt.title('P(z) Distribution, Rmag = {:.2f}'.format(Rmag))
         plt.xlabel('z')
         plt.ylabel('P(z)')
         plt.plot(z,pdz,label=r'P(z) Distribution')
@@ -98,7 +99,7 @@ for i in range(0,len(data)):
             format='png',dpi=1000,bbox_inches='tight')
     else:
         continue
-    '''
+    
     
 
 
