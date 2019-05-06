@@ -27,12 +27,12 @@ cat2 = False
 
 pwd  = "/home/ebiermann/cat/mag_matchCat/"
 if cat1:
-    fname_match = 'match4_1as_3as1mag.fits'
+    fname_match = 'match4_1as1mag_3as1mag.fits'
 if cat2:
     fname_match = 'match3_3as1mag_rem.fits'
 
 # Save Figures?
-save = False
+save = True
 if save:
     if cat1:
         figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/QQ/'

@@ -23,11 +23,11 @@ rc('text', usetex=True)
 # Topcat match MUST have WtG as first catalog!!
 
 pwd  = "/home/ebiermann/cat/mag_matchCat/"
-fname1 = 'match4_1as_3as1mag.fits'
+fname1 = 'match4_1as1mag_3as1mag.fits'
 fname2 = 'match3_3as1mag_rem.fits'
 
 # Save Figures?
-save = False
+save = True
 if save:
     pwdfig = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/mag/'
     tag = 'overlay' # tag for figure names
@@ -130,17 +130,17 @@ plt.figure()
 plt.title(r'Unclipped Data')
 plt.xlabel(r'WtG Mag - Crawford Mag')
 plt.ylabel(r'Number of Galaxies')
-plt.hist(points,range=[cmin,cmax], bins=nbins);
-plt.hist(points2,range=[cmin2,cmax2], bins=nbins,color='r');
+plt.hist(points,range=[cmin,cmax], bins=nbins,label='1as match');
+plt.hist(points2,range=[cmin2,cmax2], bins=nbins,color='r',label='3as match');
 #plt.plot(xarray,yarray,color="red",linewidth=1.0,label='Gaussian Fit')
 #plt.axvline(x=mean,linewidth=1.0,color="yellow",label='mean')
-#plt.legend()
+plt.legend()
 text_stats = r'''\noindent $\mu = {:.3f}$ \\'''.format(mean) + \
              r'''$\sigma = {:.3f}$ \\'''.format(stdev)
 #plt.text(39,900,text_stats,{'fontsize':20})
 if save:
     plt.savefig(pwdfig+'MagMatch_noclip_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
-
+'''
 ### Sigma Clipping 1 ###
 points_clip1,pointsCut1,mean_clip1,stdev_clip1 = sigma3clip(points,mean,stdev)
 points2_clip1,points2Cut1,mean2_clip1,stdev2_clip1 = \
@@ -165,9 +165,6 @@ plt.hist(points2_clip1,range=[cmin2,cmax2], bins=nbins,color='r');
 #plt.plot(xarray,yarray,color="red",linewidth=1.0,label='Gaussian Fit')
 #plt.axvline(x=mean_clip1,linewidth=1.0,color="yellow",label='mean')
 #plt.legend()
-text_stats = r'''\noindent $\mu = {:.3f}$ \\'''.format(mean_clip1) + \
-             r'''$\sigma = {:.3f}$ \\'''.format(stdev_clip1)
-text_clip = r'''Total Clippied = {}'''.format(totclip)
 #plt.text(1.7,375,text_stats,{'fontsize':20})
 #plt.text(-12.5,490,text_clip)
 if save:
@@ -199,9 +196,6 @@ plt.hist(points2_clip2,range=[cmin2,cmax2], bins=nbins, color='r');
 #plt.plot(xarray,yarray,color="red",linewidth=1.0,label='Gaussian Fit')
 #plt.axvline(x=mean_clip2,linewidth=1.0,color="yellow",label='mean')
 #plt.legend()
-text_stats = r'''\noindent $\mu = {:.3f}$ \\'''.format(mean_clip2) + \
-             r'''$\sigma = {:.3f}$ \\'''.format(stdev_clip2)
-text_clip = r'''Total Clippied = {}'''.format(totclip)
 #plt.text(2.6,400,text_stats,{'fontsize':20})
 #plt.text(-7,490,text_clip)
 if save:
@@ -231,14 +225,11 @@ plt.hist(points2_clip3,range=[cmin2,cmax2], bins=nbins, color='r',label='3as Mat
 #plt.plot(xarray,yarray,color="red",linewidth=1.0,label='Gaussian Fit')
 #plt.axvline(x=mean_clip3,linewidth=1.0,color="yellow",label='mean')
 plt.legend()
-text_stats = r'''\noindent $\mu = {:.3f}$ \\'''.format(mean_clip3) + \
-       r'''$\sigma = {:.3f}$ \\'''.format(stdev_clip3)
-text_clip = r'''Total Clippied = {}'''.format(totclip)
 #plt.text(1.3,250,text_stats,{'fontsize':20})
 #plt.text(-3,345,text_clip)
 if save:
     plt.savefig(pwdfig+'MagMatch_clip3_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
-
+'''
 if show:
     plt.show()
 plt.clf

@@ -1,0 +1,25 @@
+Catalog: match4_1as_3as1mag.fits
+Located in /home/ebiermann/cat/mag_matchCat/
+
+STATISTICS
+
+Number of data points = 1405
+
+Unclipped
+mean = -0.00681030604982
+stdev = 0.156595353096
+
+3sigma clipped, iter1: 30
+mean = -0.00531566545455
+stdev = 0.0966166875267
+fraction clipped = 0.0213523131673
+
+3sigma clipped, iter2: 45
+mean = -0.00500445112782
+stdev = 0.0693241835238
+fraction clipped = 0.0533807829181
+
+3sigma clipped, iter3: 34
+mean = -0.00445515432099
+stdev = 0.0568939400262
+fraction clipped = 0.0775800711744
