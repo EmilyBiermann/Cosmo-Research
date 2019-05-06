@@ -127,7 +127,7 @@ xarray2,yarray2,mode2,cmin2,cmax2 =\
     gaussFit(points2,nbins,mean2,stdev2)
 # Plot Figure
 plt.figure()
-plt.title(r'Unclipped Data')
+plt.title(r'R-Band Magnitude')
 plt.xlabel(r'WtG Mag - Crawford Mag')
 plt.ylabel(r'Number of Galaxies')
 plt.hist(points,range=[cmin,cmax], bins=nbins,label='1as match');
