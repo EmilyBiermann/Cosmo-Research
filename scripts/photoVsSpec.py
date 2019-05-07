@@ -27,20 +27,20 @@ cat2 = False
 
 pwd  = "/home/ebiermann/cat/mag_matchCat/"
 if cat1:
-    #fname_match = 'match4_1as1mag_3as1mag.fits'
-    fname_match = 'match5_goodObjects.fits'
+    fname_match = 'match4_1as1mag_3as1mag.fits'
 if cat2:
-    fname_match = 'match3_3as1mag_rem.fits'
+    fname_match = 'match5_goodObjects.fits'
 
 # Save Figures?
 save = True
 if save:
     if cat1:
         figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/redshift/'
-        tag = 'lensingAnalysis' # tag for figure names
+        tag = 'all' # tag for figure names
     if cat2:
-        figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/match3_rem/redshift/'
-        tag = 'match3rem'
+        #figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/match3_rem/redshift/'
+        figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/redshift/'
+        tag = 'lensingAnalysis'
 
 # Show Figures?
 show = True
@@ -120,7 +120,7 @@ x=np.linspace(0,np.amax(specZ))
 y=x
 
 plt.figure()
-plt.title(r'Redshift Comparison for Lensing Analysis Objects')
+plt.title(r'Redshift Comparison')
 plt.xlabel(r'SpecZ from Crawford')
 plt.ylabel(r'PhotoZ from WtG')
 #plt.errorbar(specZ, photoZ, xerr=specZ_err, yerr=photoZ_err, fmt='x')
@@ -148,13 +148,14 @@ print 'stdev = {}'.format(stdev)
 print 
 # Plot Figure
 plt.figure()
-plt.title(r'Redshift Comparison for Lensing Analysis Objects')
+plt.xlim(-1.2,1.2)
+plt.title(r'Redshift Comparison')
 plt.xlabel(r'Photometric Redshift - Spectroscopic Redshift')
 plt.ylabel(r'Number of Galaxies')
 plt.hist(points,range=[cmin,cmax], bins=nbins);
 #plt.plot(xarray,yarray,color="red",linewidth=1.0,label='Gaussian Fit')
 #plt.axvline(x=mean,linewidth=1.0,color="yellow",label='mean')
-plt.legend()
+#plt.legend()
 text_stats = r'''\noindent $\mu = {:.3f}$ \\'''.format(mean) + \
              r'''$\sigma = {:.3f}$ \\'''.format(stdev)
 #plt.text(1.3,325,text_stats,{'fontsize':20})
