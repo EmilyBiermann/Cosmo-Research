@@ -19,27 +19,18 @@ rc('text', usetex=True)
 
 #-------------------------------------------------------------------------------
 
-cat1 = True
-cat2 = False
-
 # Data Directories
 # Topcat match MUST have WtG as first catalog!!
 
 pwd  = "/home/ebiermann/cat/mag_matchCat/"
-if cat1:
-    fname_match = 'match4_1as1mag_3as1mag.fits'
-if cat2:
-    fname_match = 'match5_goodObjects.fits'
+fname_match1 = 'match4_1as1mag_3as1mag.fits'
+fname_match2 = 'match5_goodObjects.fits'
 
 # Save Figures?
 save = True
 if save:
-    if cat1:
-        figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/QQ/'
-        tag = 'goodObjects' # tag for figure names
-    if cat2:
-        figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/match3_rem/QQ/'
-        tag = 'match3rem'
+    figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/QQ/'
+    tag = 'lensingAnalysis' # tag for figure names
 
 # Show Figures?
 show = True
@@ -63,52 +54,45 @@ def QuanVal(x,p,a,step):
     return(quant/step)
 
 # Open catalog
-cat = fits.open(pwd + fname_match)
+cat = fits.open(pwd + fname_match1)
 data = cat[1].data
+cat.close()
+
+cat = fits.open(pwd + fname_match2)
+data2 = cat[1].data
 cat.close()
 
 # Allocate arrays
 quant = []
+quant2 = []
 
 step = 0.01
 
-# plot n random plots
-nplots = 10
-plotNums=np.random.randint(0,len(data),size=nplots)
 for i in range(0,len(data)):
     specZ = data[i][776] # Z, 777
     pdz = data[i][662]   # pdz, 663
     z = np.arange(0.01,4.01,step)
     q = QuanVal(z,pdz,specZ,step)
     quant.append(q)
-    # plot P(z) for random objects
-    '''
-    if np.isin(i,plotNums):
-        SeqNr = data[i][2] # SeqNr_1, 3
-        Rmag = data[i][650] # MAG_AUTO-SUBARU-COADD-1-W-C-RC, 651
-        plt.figure()
-        #plt.title('P(z) for {}, Rmag = {:.2f}'.format(SeqNr,Rmag))
-        plt.title('P(z) Distribution, Rmag = {:.2f}'.format(Rmag))
-        plt.xlabel('z')
-        plt.ylabel('P(z)')
-        plt.plot(z,pdz,label=r'P(z) Distribution')
-        plt.axvline(x=specZ,color='orange',label=r'Spectroscopic Redshift')
-        plt.legend()
-        if save:
-            plt.savefig(figpwd+'pzPlot_{}_{}.png'.format(SeqNr,tag),\
-            format='png',dpi=1000,bbox_inches='tight')
-    else:
-        continue
-    '''
-    
 
+for i in range(0,len(data2)):
+    specZ = data2[i][776] # Z, 777
+    pdz = data2[i][662]   # pdz, 663
+    z = np.arange(0.01,4.01,step)
+    q = QuanVal(z,pdz,specZ,step)
+    quant2.append(q)
 
 # PIT/QQ residuals Plot
 nbins = 75
-nbins = 25
+nbins2 = 25
+
 Qdata = np.sort(quant)
 Qtheory = np.linspace(0.0,1.0,len(quant))
 delQ = Qdata - Qtheory
+
+Qdata2 = np.sort(quant2)
+Qtheory2 = np.linspace(0.0,1.0,len(quant2))
+delQ2 = Qdata2 - Qtheory2
 
 plt.figure()
 gridspec.GridSpec(3,2)
@@ -117,17 +101,21 @@ plt.subplot2grid((3,2), (0,0), colspan=2, rowspan=2)
 plt.title('MACS0454')
 #plt.xlabel('PIT Value')
 plt.ylabel('Number of Galaxies')
-plt.hist(quant,bins=nbins)
+plt.hist(quant,bins=nbins,label='All Objects')
+plt.hist(quant2,bins=nbins,label='Lensing Analysis')
+
+plt.legend()
 
 plt.subplot2grid((3,2), (2,0), colspan=2, rowspan=1)
 plt.xlabel(r'Quantile')
 plt.ylabel(r'$\Delta_{\textrm{Q}}$')
 plt.hlines(0.0,0.0,1.0,linestyles='--')
-plt.plot(Qtheory,delQ)
+plt.plot(Qtheory,delQ,label='All Objects')
+plt.plot(Qtheory2,delQ2,label='Lensing Analysis')
 
 plt.tight_layout()
 if save:
-    plt.savefig(figpwd+'QQplot_{}.png'.format(tag),\
+    plt.savefig(figpwd+'QQplot_overlay_{}.png'.format(tag),\
     format='png',dpi=1000,bbox_inches='tight')
 
 

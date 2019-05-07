@@ -19,8 +19,8 @@ rc('text', usetex=True)
 
 #-------------------------------------------------------------------------------
 
-cat1 = True
-cat2 = False
+cat1 = False
+cat2 = True
 
 # Data Directories
 # Topcat match MUST have WtG as first catalog!!
@@ -32,14 +32,14 @@ if cat2:
     fname_match = 'match5_goodObjects.fits'
 
 # Save Figures?
-save = True
+save = False
 if save:
-    if cat1:
-        figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/QQ/'
-        tag = 'goodObjects' # tag for figure names
-    if cat2:
-        figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/match3_rem/QQ/'
-        tag = 'match3rem'
+    #if cat1:
+    figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/QQ/'
+    tag = 'goodObjects' # tag for figure names
+    #if cat2:
+    #    figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/match3_rem/QQ/'
+        #tag = 'match3rem'
 
 # Show Figures?
 show = True
@@ -104,7 +104,7 @@ for i in range(0,len(data)):
 
 
 # PIT/QQ residuals Plot
-nbins = 75
+#nbins = 75
 nbins = 25
 Qdata = np.sort(quant)
 Qtheory = np.linspace(0.0,1.0,len(quant))
