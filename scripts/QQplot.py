@@ -36,7 +36,7 @@ save = True
 if save:
     if cat1:
         figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/QQ/'
-        tag = 'match4' # tag for figure names
+        tag = 'zoom_match4' # tag for figure names
     if cat2:
         figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/match3_rem/QQ/'
         tag = 'match3rem'
@@ -89,16 +89,18 @@ for i in range(0,len(data)):
     if np.isin(i,plotNums):
         SeqNr = data[i][2] # SeqNr_1, 3
         Rmag = data[i][650] # MAG_AUTO-SUBARU-COADD-1-W-C-RC, 651
+        z_b = data[i][1] # BPZ_Z_B, 2
         Z_ml = bpzData[SeqNr-1][6] # BPZ_Z_ML, 7
         plt.figure()
         plt.title('P(z) for {}, Rmag = {:.2f}'.format(SeqNr,Rmag))
         #plt.title('P(z) Distribution, Rmag = {:.2f}'.format(Rmag))
         plt.xlabel('z')
         plt.ylabel('P(z)')
-        #plt.xlim(0.0,1.5)
+        plt.xlim(0.0,1.5)
         plt.plot(z,pdz,label=r'P(z) Distribution')
-        plt.axvline(x=specZ,color='orange',linestyle='--',label=r'Spectroscopic Redshift')
+        plt.axvline(x=z_b,color='blue',linestyle='--',label=r'$Z_{B}$')
         plt.axvline(x=Z_ml,color='green',linestyle=':',label=r'$Z_{ML}$')
+        plt.axvline(x=specZ,color='orange',label=r'Spectroscopic Redshift') 
         plt.legend()
         if save:
             plt.savefig(figpwd+'pzPlot_{}_{}.png'.format(SeqNr,tag),\
