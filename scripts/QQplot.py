@@ -36,7 +36,7 @@ save = True
 if save:
     if cat1:
         figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/QQ/'
-        tag = 'match4' # tag for figure names
+        tag = 'zoom_match4' # tag for figure names
     if cat2:
         figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/match3_rem/QQ/'
         tag = 'match3rem'
@@ -91,6 +91,7 @@ for i in range(0,len(data)):
         #plt.title('P(z) Distribution, Rmag = {:.2f}'.format(Rmag))
         plt.xlabel('z')
         plt.ylabel('P(z)')
+        plt.xlim(0.0,1.5)
         plt.plot(z,pdz,label=r'P(z) Distribution')
         plt.axvline(x=specZ,color='orange',label=r'Spectroscopic Redshift')
         plt.legend()
