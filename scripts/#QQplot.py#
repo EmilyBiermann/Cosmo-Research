@@ -36,7 +36,7 @@ save = True
 if save:
     if cat1:
         figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/QQ/'
-        tag = 'match4' # tag for figure names
+        tag = 'goodObjects' # tag for figure names
     if cat2:
         figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/match3_rem/QQ/'
         tag = 'match3rem'
@@ -75,7 +75,7 @@ step = 0.01
 # plot n random plots
 nplots = 10
 #plotNums=np.random.randint(0,len(data),size=nplots)
-plotNums=(332,485,528)
+plotNums=(56711,59152
 for i in range(0,len(data)):
     specZ = data[i][776] # Z, 777
     pdz = data[i][662]   # pdz, 663
@@ -83,12 +83,13 @@ for i in range(0,len(data)):
     q = QuanVal(z,pdz,specZ,step)
     quant.append(q)
     # plot P(z) for random objects
+    
     if np.isin(i,plotNums):
         SeqNr = data[i][2] # SeqNr_1, 3
         Rmag = data[i][650] # MAG_AUTO-SUBARU-COADD-1-W-C-RC, 651
         plt.figure()
-        plt.title('P(z) for {}, Rmag = {:.2f}'.format(SeqNr,Rmag))
-        #plt.title('P(z) Distribution, Rmag = {:.2f}'.format(Rmag))
+        #plt.title('P(z) for {}, Rmag = {:.2f}'.format(SeqNr,Rmag))
+        plt.title('P(z) Distribution, Rmag = {:.2f}'.format(Rmag))
         plt.xlabel('z')
         plt.ylabel('P(z)')
         plt.plot(z,pdz,label=r'P(z) Distribution')
@@ -126,9 +127,9 @@ plt.hlines(0.0,0.0,1.0,linestyles='--')
 plt.plot(Qtheory,delQ)
 
 plt.tight_layout()
-#if save:
-#    plt.savefig(figpwd+'QQplot_{}.png'.format(tag),\
-#    format='png',dpi=1000,bbox_inches='tight')
+if save:
+    plt.savefig(figpwd+'QQplot_{}.png'.format(tag),\
+    format='png',dpi=1000,bbox_inches='tight')
 
 
 if show:
