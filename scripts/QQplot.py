@@ -32,11 +32,11 @@ if cat2:
     fname_match = 'match5_goodObjects.fits'
 
 # Save Figures?
-save = False
+save = True
 if save:
     if cat1:
         figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/QQ/'
-        tag = 'zoom_match4' # tag for figure names
+        tag = 'match4' # tag for figure names
     if cat2:
         figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/match3_rem/QQ/'
         tag = 'match3rem'
@@ -146,9 +146,9 @@ plt.hlines(0.0,0.0,1.0,linestyles='--')
 plt.plot(Qtheory,delQ)
 
 plt.tight_layout()
-#if save:
-#    plt.savefig(figpwd+'QQplot_{}.png'.format(tag),\
-#    format='png',dpi=1000,bbox_inches='tight')
+if save:
+    plt.savefig(figpwd+'QQplot_{}.png'.format(tag),\
+    format='png',dpi=1000,bbox_inches='tight')
 
 
 if show:
