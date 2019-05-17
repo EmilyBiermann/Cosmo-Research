@@ -142,6 +142,7 @@ plt.hlines(nGal_th,0.0,1.0,colors='k',label=r'Even Distribution')
 plt.subplot2grid((3,2), (2,0), colspan=2, rowspan=1)
 plt.xlabel(r'Quantile')
 plt.ylabel(r'$\Delta_{\textrm{Q}}$')
+plt.ylim(-0.1,0.1)
 plt.hlines(0.0,0.0,1.0,linestyles='--')
 plt.plot(Qtheory,delQ)
 
