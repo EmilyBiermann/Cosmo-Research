@@ -145,7 +145,8 @@ xarray,yarray,mode,cmin,cmax =\
 print 'Unclipped'
 print 'mean = {}'.format(mean)
 print 'stdev = {}'.format(stdev)
-print 
+print
+
 # Plot Figure
 plt.figure()
 plt.xlim(-1.2,1.2)
@@ -156,11 +157,50 @@ plt.hist(points,range=[cmin,cmax], bins=nbins);
 #plt.plot(xarray,yarray,color="red",linewidth=1.0,label='Gaussian Fit')
 #plt.axvline(x=mean,linewidth=1.0,color="yellow",label='mean')
 #plt.legend()
-text_stats = r'''\noindent $\mu = {:.3f}$ \\'''.format(mean) + \
-             r'''$\sigma = {:.3f}$ \\'''.format(stdev)
 #plt.text(1.3,325,text_stats,{'fontsize':20})
 if save:
     plt.savefig(figpwd+'SpecPhoto_noclip_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+
+## 1+z correction and stats
+cut = 0.1
+
+points_all = points
+points = []
+cutpoints=0
+i=0
+for pZ in photoZ:
+    point = (pZ - specZ[i])/(1+specZ[i])
+    if abs(point) <= 0.1:
+        points.append(point)
+    else:
+        cutpoints = cutpoints+1
+    i=i+1
+
+mean = np.average(points)
+stdev = np.std(points)
+xarray,yarray,mode,cmin_new,cmax_new =\
+     gaussFit(points,nbins,mean,stdev)
+print '1+z Corrected, DeltaZ > 0.1'
+print 'mean = {}'.format(mean)
+print 'stdev = {}'.format(stdev)
+print 'fraction cut = {}'.format(cutpoints/float(len(points_all)))
+print 
+# Plot Figure
+plt.figure()
+#plt.xlim(-1.2,1.2)
+plt.title(r'Redshift Comparison')
+plt.xlabel(r'$(\textrm{z}_\textrm{phot} - \textrm{z}_\textrm{spec})/(1+\textrm{z}_\textrm{spec})$')
+plt.ylabel(r'Number of Galaxies')
+plt.hist(points,range=[cmin_new,cmax_new], bins=nbins,label=r'$\Delta z$ Distribution');
+plt.plot(xarray,yarray,color="red",linewidth=1.0,label='Gaussian Fit')
+#plt.axvline(x=mean,linewidth=1.0,color="yellow",label='mean')
+plt.legend()
+text_stats = r'''\noindent $\mu = {:.3f}$ \\'''.format(mean) + \
+             r'''$\sigma = {:.3f}$ \\'''.format(stdev)
+plt.text(0.05,38.0,text_stats,{'fontsize':15})
+if save:
+    plt.savefig(figpwd+'SpecPhoto_zCorrected_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+
 '''
 ### Sigma Clipping 1 ###
 points_clip1,pointsCut1,mean_clip1,stdev_clip1 = sigma3clip(points,mean,stdev)

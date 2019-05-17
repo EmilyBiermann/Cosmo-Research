@@ -6,3 +6,9 @@ Number of data points = 1199
 Unclipped
 mean = -0.00585592994162
 stdev = 0.148537567262
+
+1+z Corrected, DeltaZ > 0.1
+mean = -0.00167741005647
+stdev = 0.03009755941
+fraction cut = 0.0942452043369
+

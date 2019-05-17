@@ -32,7 +32,7 @@ if cat2:
     fname_match = 'match5_goodObjects.fits'
 
 # Save Figures?
-save = True
+save = False
 if save:
     if cat1:
         figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/QQ/'
@@ -72,8 +72,12 @@ bpzData = bpzCat[1].data
 
 # Allocate arrays
 quant = []
-
+outlier = 0
 step = 0.01
+
+nbins=75
+outLow = 1.0/float(nbins)
+outHigh = 1.0 - outLow
 
 # plot n random plots
 nplots = 10
@@ -84,7 +88,10 @@ for i in range(0,len(data)):
     pdz = data[i][662]   # pdz, 663
     z = np.arange(0.01,4.01,step)
     q = QuanVal(z,pdz,specZ,step)
+    if q <=outLow or q>=outHigh:
+       outlier = outlier+1
     quant.append(q)
+    '''
     # plot P(z) for random objects
     if np.isin(i,plotNums):
         SeqNr = data[i][2] # SeqNr_1, 3
@@ -107,16 +114,20 @@ for i in range(0,len(data)):
             format='png',dpi=1000,bbox_inches='tight')
     else:
         continue
-    
+    '''
     
 
 
 # PIT/QQ residuals Plot
-nbins = 75
-nbins = 25
+
 Qdata = np.sort(quant)
 Qtheory = np.linspace(0.0,1.0,len(quant))
 delQ = Qdata - Qtheory
+
+nGal_th = float(len(quant))/nbins
+fail = outlier - 2*nGal_th
+print('Catastrophic Failures: {}'.format(fail))
+print('Fraction of Cat. Fail: {}'.format(fail/float(len(quant))))
 
 plt.figure()
 gridspec.GridSpec(3,2)
@@ -126,6 +137,7 @@ plt.title('MACS0454')
 #plt.xlabel('PIT Value')
 plt.ylabel('Number of Galaxies')
 plt.hist(quant,bins=nbins)
+plt.hlines(nGal_th,0.0,1.0,colors='k',label=r'Even Distribution')
 
 plt.subplot2grid((3,2), (2,0), colspan=2, rowspan=1)
 plt.xlabel(r'Quantile')
