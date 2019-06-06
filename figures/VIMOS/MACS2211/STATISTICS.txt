@@ -1,0 +1,17 @@
+Catalog: MACS2211_match5b.fits
+Located in /home/ebiermann/cat/VIMOS/
+
+Notes: 
+STATISTICS
+
+Number of data points = 106
+
+Unclipped
+mean = 0.0119086905667
+stdev = 0.40981785528
+
+1+z Corrected, DeltaZ > 0.1
+mean = -0.000484861493385
+stdev = 0.02781841757
+fraction cut = 0.160377358491
+

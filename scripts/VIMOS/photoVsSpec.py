@@ -25,35 +25,29 @@ cat2 = False
 cat3 = False
 
 # Data Directories
-# Topcat match MUST have WtG as first catalog!!
 
 pwd  = "/home/ebiermann/cat/VIMOS/"
 if cat1:
-    fname_match = 'MACS0329_match4.cat'
-    specZ_idx = int(782)  # z_found
-    photZ_idx = int(1124) # BPZ_Z_B
-    seqVIMOS_idx = int(809)  # SLIT_ID
+    fname_match = 'MACS0329_match5b.fits'
 if cat2:
-    fname_match = 'MACS1347_match4.cat'
-    specZ_idx = int()
-    photZ_idx = int()
+    fname_match = 'MACS1347_match5b.fits'
 if cat3:
-    fname_match = 'MACS2211_match4.cat'
-    specZ_idx = int()
-    photZ_idx = int()
+    fname_match = 'MACS2211_match5b.fits'
+
+specZ_idx = int(10)  # z_found
+photZ_idx = int(13) # BPZ_Z_B
 
 # Save Figures?
 save = False
-if save:
-    if cat1:
-        figpwd = '/home/ebiermann/Cosmo-Research/figures/VIMOS/MACS0329/'
-        tag = 'MACS0329' # tag for figure names
-    if cat2:
-        figpwd = '/home/ebiermann/Cosmo-Research/figures/VIMOS/MACS1347/'
-        tag = 'MACS1347' # tag for figure names
-    if cat3:
-        figpwd = '/home/ebiermann/Cosmo-Research/figures/VIMOS/MACS2211/'
-        tag = 'MACS2211' # tag for figure names
+if cat1:
+    figpwd = '/home/ebiermann/Cosmo-Research/figures/VIMOS/MACS0329/'
+    tag = 'MACS0329' # tag for figure names
+if cat2:
+    figpwd = '/home/ebiermann/Cosmo-Research/figures/VIMOS/MACS1347/'
+    tag = 'MACS1347' # tag for figure names
+if cat3:
+    figpwd = '/home/ebiermann/Cosmo-Research/figures/VIMOS/MACS2211/'
+    tag = 'MACS2211' # tag for figure names
 
 # Show Figures?
 show = True
@@ -90,13 +84,6 @@ print 'Located in ' + pwd
 print
 print 'Notes: '
 
-vimosCat = np.loadtxt(pwd + 'stacked_filtered.csv',skiprows=1)
-data = vimosCat[1].data
-vimosCat.close()
-good_spec = []
-for i in range(0,len(data)):
-    good_spec.append(data[i][28]) # SLIT_ID
-
 matchCat = fits.open(pwd + fname_match)
 data = matchCat[1].data
 matchCat.close()
@@ -105,10 +92,8 @@ specZ = []
 photoZ = []
 
 for i in range(0,len(data)):
-    seq = data[i][seqVIMOS_idx]
-    if seq in good_spec:
-        specZ.append(data[i][specZ_idx])
-        photoZ.append(data[i][photZ_idx])
+    specZ.append(data[i][specZ_idx])
+    photoZ.append(data[i][photZ_idx])
 
 print 'STATISTICS'
 print 
@@ -120,8 +105,8 @@ x=np.linspace(0,np.amax(specZ))
 y=x
 
 plt.figure()
-plt.title(r'Redshift Comparison')
-plt.xlabel(r'SpecZ from Crawford')
+plt.title(r'Redshift Comparison for {}'.format(tag))
+plt.xlabel(r'SpecZ from VIMOS')
 plt.ylabel(r'PhotoZ from WtG')
 #plt.errorbar(specZ, photoZ, xerr=specZ_err, yerr=photoZ_err, fmt='x')
 plt.errorbar(specZ, photoZ,fmt='.')
@@ -130,7 +115,7 @@ if save:
     plt.savefig(figpwd+'SpecPhoto_line_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
 # Histogram
-nbins = 100
+nbins = 50
 
 # Unclipped Data
 points = []
@@ -150,7 +135,7 @@ print
 # Plot Figure
 plt.figure()
 plt.xlim(-1.2,1.2)
-plt.title(r'Redshift Comparison')
+plt.title(r'Redshift Comparison for {}'.format(tag))
 plt.xlabel(r'Photometric Redshift - Spectroscopic Redshift')
 plt.ylabel(r'Number of Galaxies')
 plt.hist(points,range=[cmin,cmax], bins=nbins);
@@ -188,7 +173,7 @@ print
 # Plot Figure
 plt.figure()
 #plt.xlim(-1.2,1.2)
-plt.title(r'Redshift Comparison')
+plt.title(r'Redshift Comparison for {}'.format(tag))
 plt.xlabel(r'$(\textrm{z}_\textrm{phot} - \textrm{z}_\textrm{spec})/(1+\textrm{z}_\textrm{spec})$')
 plt.ylabel(r'Number of Galaxies')
 plt.hist(points,range=[cmin_new,cmax_new], bins=nbins,label=r'$\Delta z$ Distribution');
