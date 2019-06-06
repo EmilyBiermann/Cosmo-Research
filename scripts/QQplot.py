@@ -32,7 +32,7 @@ if cat2:
     fname_match = 'match5_goodObjects.fits'
 
 # Save Figures?
-save = True
+save = False
 if save:
     if cat1:
         figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/QQ/'

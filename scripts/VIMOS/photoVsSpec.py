@@ -1,7 +1,8 @@
 """
 Emily Biermann
+VIMOS Analysis
 Photo vs Spec z
-3/4/19
+6/5/19
 """
 
 import numpy as np
@@ -21,26 +22,38 @@ rc('text', usetex=True)
 
 cat1 = True
 cat2 = False
+cat3 = False
 
 # Data Directories
 # Topcat match MUST have WtG as first catalog!!
 
-pwd  = "/home/ebiermann/cat/mag_matchCat/"
+pwd  = "/home/ebiermann/cat/VIMOS/"
 if cat1:
-    fname_match = 'match4_1as1mag_3as1mag.fits'
+    fname_match = 'MACS0329_match4.cat'
+    specZ_idx = int(782)  # z_found
+    photZ_idx = int(1124) # BPZ_Z_B
+    seqVIMOS_idx = int(809)  # SLIT_ID
 if cat2:
-    fname_match = 'match5_goodObjects.fits'
+    fname_match = 'MACS1347_match4.cat'
+    specZ_idx = int()
+    photZ_idx = int()
+if cat3:
+    fname_match = 'MACS2211_match4.cat'
+    specZ_idx = int()
+    photZ_idx = int()
 
 # Save Figures?
 save = False
 if save:
     if cat1:
-        figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/redshift/'
-        tag = 'all' # tag for figure names
+        figpwd = '/home/ebiermann/Cosmo-Research/figures/VIMOS/MACS0329/'
+        tag = 'MACS0329' # tag for figure names
     if cat2:
-        #figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/match3_rem/redshift/'
-        figpwd = '/home/ebiermann/Cosmo-Research/figures/mag_matchCat/all/redshift/'
-        tag = 'lensingAnalysis'
+        figpwd = '/home/ebiermann/Cosmo-Research/figures/VIMOS/MACS1347/'
+        tag = 'MACS1347' # tag for figure names
+    if cat3:
+        figpwd = '/home/ebiermann/Cosmo-Research/figures/VIMOS/MACS2211/'
+        tag = 'MACS2211' # tag for figure names
 
 # Show Figures?
 show = True
@@ -77,38 +90,25 @@ print 'Located in ' + pwd
 print
 print 'Notes: '
 
+vimosCat = np.loadtxt(pwd + 'stacked_filtered.csv',skiprows=1)
+data = vimosCat[1].data
+vimosCat.close()
+good_spec = []
+for i in range(0,len(data)):
+    good_spec.append(data[i][28]) # SLIT_ID
 
 matchCat = fits.open(pwd + fname_match)
 data = matchCat[1].data
-
-bpzCat = fits.open(pwd + 'MACS0454-03.W-C-RC.bpz.tab')
-bpzData = bpzCat[1].data
+matchCat.close()
 
 specZ = []
-specZ_err = []
-
 photoZ = []
-photoZ_errAbove = []
-photoZ_errBelow = []
-
-photoZ_chi2 = []
 
 for i in range(0,len(data)):
-    z = data[i][776] # Z, 777
-    alldata=True
-    if alldata:
-        specZ.append(z)
-        
-        WtG_SeqNr = data[i][2]             # Get data number
-        pZ = bpzData[WtG_SeqNr-1][1]       # photoZ (BPZ_Z_B)
-        photoZ.append(pZ)                  # Add photoZ to array
-        pZmin = bpzData[WtG_SeqNr-1][2]    # Get min photoZ value
-        photoZ_errBelow.append(pZ - pZmin) # Calculate lower errbar
-        pZmax = bpzData[WtG_SeqNr-1][3]    # Get max photoZ value
-        photoZ_errAbove.append(pZmax - pZ) # Calculate upper errbar
-        photoZ_chi2.append(bpzData[WtG_SeqNr-1][8])
-
-photoZ_err = np.array([photoZ_errBelow,photoZ_errAbove])
+    seq = data[i][seqVIMOS_idx]
+    if seq in good_spec:
+        specZ.append(data[i][specZ_idx])
+        photoZ.append(data[i][photZ_idx])
 
 print 'STATISTICS'
 print 
