@@ -1,0 +1,2 @@
+Catastrophic Failures: 16.1733333333
+Fraction of Cat. Fail: 0.152578616352

@@ -100,7 +100,7 @@ print
 print 'Number of data points = {}'.format(len(specZ))
 print
 
-# 1-1 line
+# Scatter plot with 1-1 line
 x=np.linspace(0,np.amax(specZ))
 y=x
 
@@ -112,7 +112,7 @@ plt.ylabel(r'PhotoZ from WtG')
 plt.errorbar(specZ, photoZ,fmt='.')
 plt.plot(x,y,linestyle='--')
 if save:
-    plt.savefig(figpwd+'SpecPhoto_line_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig(figpwd+'SpecPhoto_scatter_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
 # Histogram
 nbins = 50
