@@ -21,8 +21,8 @@ rc('text', usetex=True)
 #-------------------------------------------------------------------------------
 
 cat1 = False
-cat2 = True
-cat3 = False
+cat2 = False
+cat3 = True
 
 # Data Directories
 
