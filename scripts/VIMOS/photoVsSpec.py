@@ -20,8 +20,8 @@ rc('text', usetex=True)
 
 #-------------------------------------------------------------------------------
 
-cat1 = True
-cat2 = False
+cat1 = False
+cat2 = True
 cat3 = False
 
 # Data Directories
@@ -182,7 +182,7 @@ plt.plot(xarray,yarray,color="red",linewidth=1.0,label='Gaussian Fit')
 plt.legend()
 text_stats = r'''\noindent $\mu = {:.3f}$ \\'''.format(mean) + \
              r'''$\sigma = {:.3f}$ \\'''.format(stdev)
-plt.text(0.05,38.0,text_stats,{'fontsize':15})
+#plt.text(0.05,38.0,text_stats,{'fontsize':15})
 if save:
     plt.savefig(figpwd+'SpecPhoto_zCorrected_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
