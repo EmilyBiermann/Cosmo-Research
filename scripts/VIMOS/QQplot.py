@@ -19,9 +19,9 @@ rc('text', usetex=True)
 
 #-------------------------------------------------------------------------------
 
-cat1 = False
+cat1 = True
 cat2 = False
-cat3 = True
+cat3 = False
 
 # Data Directories
 
@@ -40,7 +40,7 @@ photZ_idx = int(13) # BPZ_Z_B
 pdz_idx = int(17)   # pdz
 
 # Save Figures?
-save = True
+save = False
 if cat1:
     figpwd = '/home/ebiermann/Cosmo-Research/figures/VIMOS/MACS0329/'
     tag = 'MACS0329' # tag for figure names
@@ -88,6 +88,8 @@ outHigh = 1.0 - outLow
 # plot n random plots
 nplots = 10
 plotNums=np.random.randint(0,len(data),size=nplots)
+#plotNums=[24827,27980,32464,45558,17958,29192,29853,17472,32271] out. MACS1347
+#plotNums=[13173,29832,26678,14526,34033,37401,29277,36335] outlier MACS0329
 for i in range(0,len(data)):
     specZ = data[i][specZ_idx] # z_found
     pdz = data[i][pdz_idx]   # pdz
@@ -102,6 +104,8 @@ for i in range(0,len(data)):
     
     # plot P(z) for random objects
     if np.isin(i,plotNums):
+    #SeqNr_2 = data[i][5]
+    #if np.isin(SeqNr_2,plotNums):
         SeqNr = data[i][SeqNr_idx] # SeqNr_1, 3
         mag = data[i][mag_idx] # MAG_AUTO-SUBARU-COADD-1-W-C-RC, 651
         #Z_ml = bpzData[SeqNr-1][6] # BPZ_Z_ML, 7
@@ -111,14 +115,14 @@ for i in range(0,len(data)):
         #plt.title('P(z) Distribution, mag = {:.2f}'.format(Rmag))
         plt.xlabel('z')
         plt.ylabel('P(z)')
-        plt.xlim(0.0,1.5)
+        #plt.xlim(0.0,1.5)
         plt.plot(z,pdz,label=r'P(z) Distribution')
         plt.axvline(x=Z_B,color='blue',linestyle='--',label=r'$Z_{B}$')  
         #plt.axvline(x=Z_ml,color='green',linestyle=':',label=r'$Z_{ML}$')
         plt.axvline(x=specZ,color='orange',label=r'Spectroscopic Redshift')
         plt.legend()
         if save:
-            plt.savefig(figpwd+'pzPlot/pzPlot_{}_{}.png'.format(SeqNr,tag),\
+            plt.savefig(figpwd+'pzPlot/SpecOutlier/pzPlot_{}_{}.png'.format(SeqNr_2,tag),\
             format='png',dpi=1000,bbox_inches='tight')
     else:
         continue
