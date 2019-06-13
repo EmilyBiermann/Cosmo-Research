@@ -19,9 +19,9 @@ rc('text', usetex=True)
 
 #-------------------------------------------------------------------------------
 
-cat1 = True
+cat1 = False
 cat2 = False
-cat3 = False
+cat3 = True
 
 # Data Directories
 
@@ -49,7 +49,7 @@ if cat2:
     tag = 'MACS1347' # tag for figure names
 if cat3:
     figpwd = '/home/ebiermann/Cosmo-Research/figures/VIMOS/MACS2211/'
-    tag = 'MACS2211' # tag for figure names
+    tag = 'MACS2211-Galaxy' # tag for figure names
 
 # Show Figures?
 show = True
@@ -87,9 +87,11 @@ outHigh = 1.0 - outLow
 
 # plot n random plots
 nplots = 10
-plotNums=np.random.randint(0,len(data),size=nplots)
+#plotNums=np.random.randint(0,len(data),size=nplots)
 #plotNums=[24827,27980,32464,45558,17958,29192,29853,17472,32271] out. MACS1347
 #plotNums=[13173,29832,26678,14526,34033,37401,29277,36335] outlier MACS0329
+plotNums=[11119,17014,19661,30519,31699,34856,35932] # outlier MACS2211
+AGN = [11119,17014,30519] # outlier AGN MACS2211 (rest are galaxies)
 for i in range(0,len(data)):
     specZ = data[i][specZ_idx] # z_found
     pdz = data[i][pdz_idx]   # pdz
@@ -103,15 +105,18 @@ for i in range(0,len(data)):
     quant.append(q)
     
     # plot P(z) for random objects
-    if np.isin(i,plotNums):
-    #SeqNr_2 = data[i][5]
-    #if np.isin(SeqNr_2,plotNums):
+    #if np.isin(i,plotNums):
+    SeqNr_2 = data[i][5]
+    if np.isin(SeqNr_2,plotNums):
         SeqNr = data[i][SeqNr_idx] # SeqNr_1, 3
         mag = data[i][mag_idx] # MAG_AUTO-SUBARU-COADD-1-W-C-RC, 651
         #Z_ml = bpzData[SeqNr-1][6] # BPZ_Z_ML, 7
         Z_B = data[i][photZ_idx]
         plt.figure()
-        plt.title('{} P(z) for {}, mag = {:.2f}'.format(tag,SeqNr,mag))
+        if np.isin(SeqNr_2,AGN):
+            plt.title('{} P(z) for {}, AGN, mag = {:.2f}'.format(tag,SeqNr_2,mag))
+        else:
+            plt.title('{} P(z) for {}, GAL, mag = {:.2f}'.format(tag,SeqNr_2,mag))
         #plt.title('P(z) Distribution, mag = {:.2f}'.format(Rmag))
         plt.xlabel('z')
         plt.ylabel('P(z)')
@@ -128,7 +133,7 @@ for i in range(0,len(data)):
         continue
     
 # PIT/QQ residuals Plot
-
+'''
 Qdata = np.sort(quant)
 Qtheory = np.linspace(0.0,1.0,len(quant))
 delQ = Qdata - Qtheory
@@ -159,7 +164,7 @@ plt.tight_layout()
 if save:
     plt.savefig(figpwd+'QQplot_{}.png'.format(tag),\
     format='png',dpi=1000,bbox_inches='tight')
-
+'''
 
 if show:
     plt.show()
