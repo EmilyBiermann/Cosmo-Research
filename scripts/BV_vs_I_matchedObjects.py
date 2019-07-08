@@ -18,9 +18,9 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 # Save Figures?
-save = True
+save = False
 if save:
-    tag = 'MACS0454-type-000cut_13match' # tag for figure names
+    tag = 'LIRG' # tag for figure names
 
 # Show Figures?
 show = True
@@ -37,46 +37,24 @@ def gaussFit(data,nbins,mu,sig):
     return(xarray,yarray,mode,cmin,cmax)
 
 # Data Directories
-# Topcat match MUST have WtG as first catalog!!
 
-pwd  = "/home/ebiermann/cat/"
-'''
-fname_match = 'WtG_SpecCrawNoStar_1arc_3arc_match.fits'
-cat1=True
-cat2=False
-'''
-fname_match = 'MACS0454-3_typed/WtGMACS0454-03typed-000cut_SpecCrawNoStar_13match.fits'
-cat1=False
-cat2=True
+pwd  = "/home/ebiermann/cat/LIRG/"
 
-#fname_match = 'WtG_SpecCrawNoStar_3arcsecMatch.fits' #Craw: ZTYPE==1, STAR==0
-#fname_match = 'WtGPhot_CSpec_match.fits' # 1arcsec, stars included
-#fname_match = 'WtG_SpecCrawNoStarNonzeroZ_3arcsecMatch.fits'
-#fname_match = 'WtG_SpecCrawNoStarNonzeroZ_1arcsecMatch.fits'
-#fname_match = 'WtG_SpecCraw_magStarZcuts_1arcsecMatch.fits'
-#fname_match = 'WtG_SpecCraw_magStarZcuts_3arcsecMatch.fits'
+fname_match = 'ms0451_crawSpec_MACS0454_match.fits'
+Bname = 'MAG_APER1-SUBARU-conv-1-W-J-B'
+Vname = 'MAG_APER1-SUBARU-conv-1-W-J-V'
+Iname = 'MAG_ISO-SUBARU-conv-1-W-S-I+'
 
 matchCat = fits.open(pwd + fname_match)
 data = matchCat[1].data
 
 # Allocate arrays for magnitude, color, redshift
-WtG_BV = []
-WtG_I = []
-specZ = []
+WtG_BV = data[Bname] - data[Vname]
+WtG_I = data[Iname]
+specZ = data['Z']
+'''
 specZ_cut = []
 
-# Get data
-if cat1:
-    for i in range(0,len(data)):
-        z = data[i][774] # Z (775)
-        specZ.append(z)
-        if z>=0.524 and z<=0.552:
-            WtG_B = data[i][528]  # MAG_APER1_SUBARU-10_2-1-W-J-B (529)
-            WtG_V = data[i][556]  # MAG_APER1_SUBARU-10_2-1-W-J-V (557)
-            WtG_BV.append(WtG_B - WtG_V)
-            WtG_I.append(data[i][616])  # MAG_ISO-SUBARU-10_2-1-W-S-I+ (617)
-            specZ_cut.append(z)
-if cat2:
     for i in range(0,len(data)):
         z = data[i][829] # Z (830)
         specZ.append(z)
@@ -86,7 +64,7 @@ if cat2:
             WtG_BV.append(WtG_B - WtG_V)
             WtG_I.append(data[i][675])  # MAG_ISO-SUBARU-conv-W-S-I+ (676)
             specZ_cut.append(z)
-
+'''
 # Histogram
 nbins = 50
 '''
@@ -123,10 +101,7 @@ plt.xlabel(r'I')
 plt.ylabel(r'B - V')
 plt.errorbar(WtG_I, WtG_BV, fmt='.')
 if save:
-    if cat1:
-        plt.savefig('../figures/BVvsI_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
-    if cat2:
-        plt.savefig('../figures/MACS0454-03_typed/BVvsI_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
+    plt.savefig('../figures/BVvsI_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
 if show:
     plt.show()

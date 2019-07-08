@@ -1,0 +1,17 @@
+"""
+Emily Biermann
+Convert cat to fits_ldac format
+6/18/19
+"""
+
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+from astropy.io import fits
+from scipy import stats
+from scipy.stats import norm
+
+magZpt = 27.0
+
+pwd = '/home/ebiermann/cat/MACS0454_Astrometry/scamp/'
+fname = 'crawford_spec_SCAMP.fits'

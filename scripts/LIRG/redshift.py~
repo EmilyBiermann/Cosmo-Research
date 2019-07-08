@@ -1,0 +1,22 @@
+"""
+Emily Biermann
+Photo vs Spec z
+3/4/19
+"""
+
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+from astropy.io import fits
+from scipy import stats
+from scipy.stats import norm
+
+from matplotlib import rc
+rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
+## for Palatino and other serif fonts use:
+#rc('font',**{'family':'serif','serif':['Palatino']})
+rc('text', usetex=True)
+
+#-------------------------------------------------------------------------------
+
+pwd = 

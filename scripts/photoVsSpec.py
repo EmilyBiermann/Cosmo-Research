@@ -80,9 +80,11 @@ print 'Notes: '
 
 matchCat = fits.open(pwd + fname_match)
 data = matchCat[1].data
+matchCat.close()
 
 bpzCat = fits.open(pwd + 'MACS0454-03.W-C-RC.bpz.tab')
 bpzData = bpzCat[1].data
+bpzCat.close()
 
 specZ = []
 specZ_err = []
