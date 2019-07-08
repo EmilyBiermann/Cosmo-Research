@@ -38,33 +38,34 @@ def gaussFit(data,nbins,mu,sig):
 
 # Data Directories
 
-pwd  = "/home/ebiermann/cat/LIRG/"
+pwd1  = "/home/ebiermann/cat/LIRG/"
 
 fname_match = 'ms0451_crawSpec_MACS0454_match.fits'
 Bname = 'MAG_APER1-SUBARU-conv-1-W-J-B'
 Vname = 'MAG_APER1-SUBARU-conv-1-W-J-V'
 Iname = 'MAG_ISO-SUBARU-conv-1-W-S-I+'
 
-matchCat = fits.open(pwd + fname_match)
+pwd2 = '/home/ebiermann/cat/MACS0454-3_typed/'
+fname2 = 'galaxySpecCraw_ClusterZ.fits'
+
+matchCat = fits.open(pwd1 + fname_match)
 data = matchCat[1].data
+matchCat.close()
+
+cat2 = fits.open(pwd2 + fname2)
+data2 = cat2[1].data
+cat2.close()
 
 # Allocate arrays for magnitude, color, redshift
-WtG_BV = data[Bname] - data[Vname]
-WtG_I = data[Iname]
-specZ = data['Z']
-'''
-specZ_cut = []
+BV_1 = data[Bname] - data[Vname]
+I_1 = data[Iname]
+specZ_1 = data['Z']
 
-    for i in range(0,len(data)):
-        z = data[i][829] # Z (830)
-        specZ.append(z)
-        if z>=0.525 and z<=0.553:
-            WtG_B = data[i][603]  # MAG_APER1_SUBARU-conv-1-W-J-B (604)
-            WtG_V = data[i][623]  # MAG_APER1_SUBARU-conv-1-W-J-V (624)
-            WtG_BV.append(WtG_B - WtG_V)
-            WtG_I.append(data[i][675])  # MAG_ISO-SUBARU-conv-W-S-I+ (676)
-            specZ_cut.append(z)
-'''
+BV_2 = data2[Bname] - data2[Vname]
+I_2 = data2[Iname]
+specZ_2 = data2['Z']
+
+
 # Histogram
 nbins = 50
 '''
@@ -99,7 +100,11 @@ plt.figure()
 plt.title(r'Color Magnitude Comparison')
 plt.xlabel(r'I')
 plt.ylabel(r'B - V')
-plt.errorbar(WtG_I, WtG_BV, fmt='.')
+plt.xlim(17.0,24.6)
+plt.ylim(0.,1.8)
+plt.errorbar(I_2, BV_2, fmt='.')
+plt.errorbar(I_1, BV_1, fmt='.',label='FIR Objects')
+plt.legend()
 if save:
     plt.savefig('../figures/BVvsI_{}.png'.format(tag),format='png',dpi=1000,bbox_inches='tight')
 
