@@ -1,0 +1,26 @@
+"""
+Emily Biermann
+Compare mag from WtG, Crawford Match
+3/14/19
+"""
+
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+from astropy.io import fits
+from scipy import stats
+from scipy.stats import norm
+
+from matplotlib import rc
+rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
+## for Palatino and other serif fonts use:
+#rc('font',**{'family':'serif','serif':['Palatino']})
+rc('text', usetex=True)
+
+# Save Figures?
+save = False
+if save:
+    tag = 'LIRG' # tag for figure names
+
+# Show Figures?
+show = True
